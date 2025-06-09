@@ -1,0 +1,531 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, Alert, Platform, ActivityIndicator } from 'react-native';
+import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { useLocalization } from '@/contexts/LocalizationContext';
+import { Colors } from '@/constants/Colors';
+import { commonStyles } from '@/styles/common';
+import { wasteItems } from '@/data/wasteItems';
+import type { WasteItem, RecognitionResult } from '@/types';
+
+export default function CameraScreen() {
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme ?? 'light'];
+  const { t } = useLocalization();
+  
+  const [permission, requestPermission] = useCameraPermissions();
+  const [facing, setFacing] = useState<CameraType>('back');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [recognitionResult, setRecognitionResult] = useState<RecognitionResult | null>(null);
+  const cameraRef = useRef<CameraView>(null);
+
+  useEffect(() => {
+    requestPermissions();
+  }, []);
+
+  const requestPermissions = async () => {
+    if (!permission?.granted) {
+      await requestPermission();
+    }
+  };
+
+  const takePicture = async () => {
+    if (!cameraRef.current) return;
+
+    try {
+      setIsAnalyzing(true);
+      
+      const photo = await cameraRef.current.takePictureAsync({
+        quality: 0.8,
+        skipProcessing: false,
+      });
+
+      if (photo) {
+        // Simulate AI recognition (in a real app, this would be sent to an AI service)
+        await simulateAIRecognition();
+      }
+    } catch (error) {
+      console.error('Error taking picture:', error);
+      Alert.alert(
+        t('common.error'),
+        '写真の撮影に失敗しました。もう一度お試しください。'
+      );
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const simulateAIRecognition = async (): Promise<void> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Simulate random recognition result for demo
+        const randomItem = wasteItems[Math.floor(Math.random() * wasteItems.length)];
+        const confidence = Math.random() * 0.4 + 0.6; // 60-100% confidence
+        
+        setRecognitionResult({
+          confidence,
+          item: randomItem,
+          suggestions: wasteItems
+            .filter(item => item.category === randomItem.category && item.id !== randomItem.id)
+            .slice(0, 3)
+        });
+        
+        resolve();
+      }, 2000); // 2 second delay to simulate processing
+    });
+  };
+
+  const getCategoryColor = (category: string): string => {
+    switch (category) {
+      case 'burnable':
+        return Colors.burnable;
+      case 'recyclable':
+        return Colors.recyclable;
+      case 'nonBurnable':
+        return Colors.nonBurnable;
+      case 'oversized':
+        return Colors.oversized;
+      default:
+        return Colors.primary;
+    }
+  };
+
+  const getCategoryName = (category: string): string => {
+    return t(`waste.${category}`);
+  };
+
+  const toggleCameraFacing = () => {
+    setFacing(current => (current === 'back' ? 'front' : 'back'));
+  };
+
+  const resetRecognition = () => {
+    setRecognitionResult(null);
+  };
+
+  const renderPermissionView = () => (
+    <ThemedView style={[commonStyles.container, styles.centerContent]}>
+      <ThemedText style={styles.permissionIcon}>📷</ThemedText>
+      <ThemedText style={styles.permissionTitle}>
+        {t('camera.permission')}
+      </ThemedText>
+      <ThemedText style={styles.permissionSubtitle}>
+        カメラでごみを識別するために、カメラへのアクセスを許可してください。
+      </ThemedText>
+      <TouchableOpacity
+        style={[commonStyles.button, commonStyles.buttonPrimary, styles.permissionButton]}
+        onPress={requestPermissions}
+      >
+        <ThemedText style={commonStyles.buttonText}>
+          アクセスを許可
+        </ThemedText>
+      </TouchableOpacity>
+    </ThemedView>
+  );
+
+  const renderAnalyzingView = () => (
+    <ThemedView style={styles.analyzingOverlay}>
+      <ThemedView style={styles.analyzingCard}>
+        <ActivityIndicator size="large" color={colors.tint} />
+        <ThemedText style={styles.analyzingText}>
+          {t('camera.analyzing')}
+        </ThemedText>
+        <ThemedText style={styles.analyzingSubtext}>
+          画像を解析しています...
+        </ThemedText>
+      </ThemedView>
+    </ThemedView>
+  );
+
+  const renderResultView = () => {
+    if (!recognitionResult) return null;
+
+    const { item, confidence, suggestions } = recognitionResult;
+    const categoryColor = getCategoryColor(item.category);
+
+    return (
+      <ThemedView style={styles.resultOverlay}>
+        <ThemedView style={[
+          styles.resultCard,
+          { backgroundColor: colorScheme === 'dark' ? colors.surface : colors.surface }
+        ]}>
+          {/* Header */}
+          <ThemedView style={styles.resultHeader}>
+            <ThemedText style={styles.resultTitle}>{t('camera.result')}</ThemedText>
+            <TouchableOpacity onPress={resetRecognition}>
+              <IconSymbol name="xmark.circle.fill" size={24} color={colors.icon} />
+            </TouchableOpacity>
+          </ThemedView>
+
+          {/* Main Result */}
+          <ThemedView style={[styles.mainResult, { borderColor: categoryColor + '30' }]}>
+            <ThemedText style={styles.itemIcon}>{item.icon || '📦'}</ThemedText>
+            <ThemedView style={styles.itemDetails}>
+              <ThemedText style={styles.itemName}>{item.name}</ThemedText>
+              <ThemedText style={[styles.itemCategory, { color: categoryColor }]}>
+                {getCategoryName(item.category)}
+              </ThemedText>
+              <ThemedView style={styles.confidenceContainer}>
+                <ThemedText style={styles.confidenceLabel}>
+                  {t('camera.confidence')}:
+                </ThemedText>
+                <ThemedText style={[styles.confidenceValue, { color: categoryColor }]}>
+                  {Math.round(confidence * 100)}%
+                </ThemedText>
+              </ThemedView>
+            </ThemedView>
+          </ThemedView>
+
+          {/* Instructions */}
+          <ThemedView style={styles.instructionsContainer}>
+            <ThemedText style={styles.instructionsTitle}>出し方</ThemedText>
+            <ThemedText style={styles.instructionsText}>
+              {item.instructions}
+            </ThemedText>
+          </ThemedView>
+
+          {/* Suggestions */}
+          {suggestions && suggestions.length > 0 && (
+            <ThemedView style={styles.suggestionsContainer}>
+              <ThemedText style={styles.suggestionsTitle}>類似アイテム</ThemedText>
+              {suggestions.map((suggestion, index) => (
+                <ThemedView key={suggestion.id} style={styles.suggestionItem}>
+                  <ThemedText style={styles.suggestionIcon}>
+                    {suggestion.icon || '📦'}
+                  </ThemedText>
+                  <ThemedText style={styles.suggestionName}>
+                    {suggestion.name}
+                  </ThemedText>
+                  <ThemedText style={[
+                    styles.suggestionCategory,
+                    { color: getCategoryColor(suggestion.category) }
+                  ]}>
+                    {getCategoryName(suggestion.category)}
+                  </ThemedText>
+                </ThemedView>
+              ))}
+            </ThemedView>
+          )}
+
+          {/* Action Buttons */}
+          <ThemedView style={styles.actionButtons}>
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: colors.tint + '20' }]}
+              onPress={resetRecognition}
+            >
+              <ThemedText style={[styles.actionButtonText, { color: colors.tint }]}>
+                {t('camera.tryAgain')}
+              </ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+        </ThemedView>
+      </ThemedView>
+    );
+  };
+
+  if (!permission?.granted) {
+    return renderPermissionView();
+  }
+
+  return (
+    <ThemedView style={styles.container}>
+      {/* Camera Header */}
+      <ThemedView style={styles.header}>
+        <ThemedText style={[commonStyles.title, colorScheme === 'dark' ? commonStyles.titleDark : {}]}>
+          {t('camera.title')}
+        </ThemedText>
+        <ThemedText style={[commonStyles.textSecondary, colorScheme === 'dark' ? commonStyles.textSecondaryDark : {}]}>
+          ごみを中央に配置して撮影してください
+        </ThemedText>
+      </ThemedView>
+
+      {/* Camera View */}
+      <ThemedView style={styles.cameraContainer}>
+        <CameraView
+          ref={cameraRef}
+          style={styles.camera}
+          facing={facing}
+        >
+          {/* Camera Overlay */}
+          <ThemedView style={styles.cameraOverlay}>
+            {/* Guide Frame */}
+            <ThemedView style={styles.guideFrame} />
+            
+            {/* Camera Controls */}
+            <ThemedView style={styles.cameraControls}>
+              <TouchableOpacity
+                style={styles.flipButton}
+                onPress={toggleCameraFacing}
+              >
+                <IconSymbol name="camera.rotate" size={24} color="#FFFFFF" />
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={[styles.captureButton, isAnalyzing && styles.captureButtonDisabled]}
+                onPress={takePicture}
+                disabled={isAnalyzing}
+              >
+                <ThemedView style={styles.captureButtonInner} />
+              </TouchableOpacity>
+              
+              <ThemedView style={styles.placeholder} />
+            </ThemedView>
+          </ThemedView>
+        </CameraView>
+      </ThemedView>
+
+      {/* Analyzing Overlay */}
+      {isAnalyzing && renderAnalyzingView()}
+
+      {/* Result Overlay */}
+      {recognitionResult && renderResultView()}
+    </ThemedView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+  },
+  header: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 40,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    alignItems: 'center',
+  },
+  permissionIcon: {
+    fontSize: 64,
+    marginBottom: 20,
+  },
+  permissionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  permissionSubtitle: {
+    fontSize: 16,
+    opacity: 0.7,
+    textAlign: 'center',
+    lineHeight: 24,
+    marginBottom: 30,
+  },
+  permissionButton: {
+    paddingHorizontal: 30,
+  },
+  cameraContainer: {
+    flex: 1,
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  camera: {
+    flex: 1,
+  },
+  cameraOverlay: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  guideFrame: {
+    width: 250,
+    height: 250,
+    borderWidth: 3,
+    borderColor: '#FFFFFF80',
+    borderRadius: 20,
+    backgroundColor: 'transparent',
+  },
+  cameraControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 40,
+  },
+  flipButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#00000050',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  captureButton: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 4,
+    borderColor: '#00000030',
+  },
+  captureButtonDisabled: {
+    opacity: 0.5,
+  },
+  captureButtonInner: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#FF3B30',
+  },
+  placeholder: {
+    width: 50,
+    height: 50,
+  },
+  analyzingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#00000080',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  analyzingCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 30,
+    alignItems: 'center',
+    marginHorizontal: 40,
+  },
+  analyzingText: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 16,
+    marginBottom: 8,
+    color: '#000000',
+  },
+  analyzingSubtext: {
+    fontSize: 14,
+    opacity: 0.7,
+    color: '#000000',
+  },
+  resultOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#00000080',
+    justifyContent: 'flex-end',
+  },
+  resultCard: {
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    padding: 24,
+    maxHeight: '80%',
+  },
+  resultHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  resultTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  mainResult: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 2,
+    marginBottom: 20,
+  },
+  itemIcon: {
+    fontSize: 32,
+    marginRight: 16,
+  },
+  itemDetails: {
+    flex: 1,
+  },
+  itemName: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  itemCategory: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 8,
+  },
+  confidenceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  confidenceLabel: {
+    fontSize: 12,
+    opacity: 0.7,
+    marginRight: 8,
+  },
+  confidenceValue: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  instructionsContainer: {
+    marginBottom: 20,
+  },
+  instructionsTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  instructionsText: {
+    fontSize: 14,
+    lineHeight: 20,
+    opacity: 0.8,
+  },
+  suggestionsContainer: {
+    marginBottom: 20,
+  },
+  suggestionsTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  suggestionItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  suggestionIcon: {
+    fontSize: 18,
+    marginRight: 12,
+    width: 24,
+  },
+  suggestionName: {
+    flex: 1,
+    fontSize: 14,
+    marginRight: 8,
+  },
+  suggestionCategory: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  actionButton: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  actionButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
