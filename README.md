@@ -1,50 +1,114 @@
-# Welcome to your Expo app 👋
+# 川崎市ごみ分別アプリ 🗑️
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+川崎市民のためのごみ分別・収集スケジュール管理アプリです。品目検索、収集日カレンダー、リマインダー通知などの機能を提供します。
 
-## Get started
+## 主な機能
 
-1. Install dependencies
+- 📱 **ごみ分別検索** - 5,000以上の品目から適切な分別方法を検索
+- 📅 **収集カレンダー** - 地区別の収集スケジュールを確認
+- 🔔 **リマインダー通知** - 収集日前日の通知機能
+- 🌍 **多言語対応** - 日本語、英語、中国語、韓国語、ポルトガル語、ベトナム語に対応
+- 🎨 **ダーク/ライトモード** - システム設定に連動したテーマ切り替え
+- 🔍 **AI画像認識** - カメラで撮影した品目を自動判別（開発中）
+
+## 技術スタック
+
+- **React Native** - Expo SDK 53
+- **TypeScript** - 型安全な開発環境
+- **Expo Router** - ファイルベースのルーティング
+- **AsyncStorage** - ローカルデータ保存
+- **Expo Notifications** - プッシュ通知
+
+## セットアップ
+
+### 必要な環境
+
+- Node.js 18以上
+- npm または yarn
+- iOS/Androidエミュレータ（オプション）
+
+### インストール手順
+
+1. 依存関係のインストール
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. 開発サーバーの起動
 
    ```bash
-   npx expo start
+   npm start
    ```
 
-In the output, you'll find options to open the app in a
+3. アプリの実行
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   - **iOS**: `i`キーを押す
+   - **Android**: `a`キーを押す
+   - **Web**: `w`キーを押す
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## 開発コマンド
 
 ```bash
+# 開発サーバー起動
+npm start
+
+# iOS実行
+npm run ios
+
+# Android実行
+npm run android
+
+# Web実行
+npm run web
+
+# リント実行
+npm run lint
+
+# プロジェクトリセット
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## プロジェクト構造
 
-## Learn more
+```
+├── app/                    # アプリケーションのルート
+│   ├── (tabs)/            # タブナビゲーション
+│   │   ├── index.tsx      # ホーム画面
+│   │   ├── calendar.tsx   # カレンダー画面
+│   │   ├── search.tsx     # 検索画面
+│   │   └── settings.tsx   # 設定画面
+│   ├── _layout.tsx        # ルートレイアウト
+│   └── +not-found.tsx     # 404ページ
+├── components/            # 再利用可能なコンポーネント
+├── contexts/              # Reactコンテキスト
+├── data/                  # アプリケーションデータ
+│   ├── areas.ts          # 地区情報
+│   ├── wasteItems.ts     # ごみ品目データベース
+│   └── holidays.ts       # 祝日データ
+├── hooks/                 # カスタムフック
+├── services/              # 外部サービス連携
+└── types/                 # TypeScript型定義
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## データ管理
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- **ごみ品目データ**: 5,000以上の品目を含むローカルデータベース
+- **地区情報**: 川崎市の全地区（川崎区、幸区、中原区、高津区、宮前区、多摩区、麻生区）に対応
+- **収集スケジュール**: 各地区の収集曜日と時間を管理
 
-## Join the community
+## 貢献方法
 
-Join our community of developers creating universal apps.
+1. このリポジトリをフォーク
+2. 機能ブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 変更をコミット (`git commit -m 'Add amazing feature'`)
+4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。
+
+## お問い合わせ
+
+ご質問や提案がありましたら、Issueを作成してください。
