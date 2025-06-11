@@ -8,6 +8,8 @@ const NOTIFICATION_SETTINGS_KEY = 'notificationSettings';
 
 export interface NotificationSettings {
   enabled: boolean;
+  eveningEnabled: boolean;
+  morningEnabled: boolean;
   eveningTime: { hour: number; minute: number };
   morningTime: { hour: number; minute: number };
   enabledTypes: WasteCategory[];
@@ -15,6 +17,8 @@ export interface NotificationSettings {
 
 const defaultSettings: NotificationSettings = {
   enabled: true,
+  eveningEnabled: true,
+  morningEnabled: true,
   eveningTime: { hour: 19, minute: 0 }, // 7:00 PM
   morningTime: { hour: 7, minute: 0 },   // 7:00 AM
   enabledTypes: ['burnable', 'recyclable', 'nonBurnable', 'oversized'],
@@ -57,7 +61,14 @@ export class NotificationService {
     try {
       const settingsString = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEY);
       if (settingsString) {
-        return { ...defaultSettings, ...JSON.parse(settingsString) };
+        const savedSettings = JSON.parse(settingsString);
+        // Ensure backward compatibility - add default values for new fields
+        return { 
+          ...defaultSettings, 
+          ...savedSettings,
+          eveningEnabled: savedSettings.eveningEnabled ?? true,
+          morningEnabled: savedSettings.morningEnabled ?? true,
+        };
       }
     } catch (error) {
       console.error('Error loading notification settings:', error);
@@ -109,23 +120,27 @@ export class NotificationService {
         }
 
         if (collectionTypes.length > 0) {
-          // Schedule evening notification (day before)
-          await this.scheduleNotification({
-            date: targetDate,
-            types: collectionTypes,
-            isEvening: true,
-            settings,
-            language,
-          });
+          // Schedule evening notification (day before) if enabled
+          if (settings.eveningEnabled) {
+            await this.scheduleNotification({
+              date: targetDate,
+              types: collectionTypes,
+              isEvening: true,
+              settings,
+              language,
+            });
+          }
 
-          // Schedule morning notification (collection day)
-          await this.scheduleNotification({
-            date: targetDate,
-            types: collectionTypes,
-            isEvening: false,
-            settings,
-            language,
-          });
+          // Schedule morning notification (collection day) if enabled
+          if (settings.morningEnabled) {
+            await this.scheduleNotification({
+              date: targetDate,
+              types: collectionTypes,
+              isEvening: false,
+              settings,
+              language,
+            });
+          }
         }
       }
     }

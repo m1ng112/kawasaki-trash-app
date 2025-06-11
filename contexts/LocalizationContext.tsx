@@ -91,6 +91,16 @@ const translations = {
     'notification.title': 'ごみ収集のお知らせ',
     'notification.tomorrowCollection': '明日は{type}の収集日です',
     'notification.todayCollection': '今日は{type}の収集日です',
+    'notification.timeSettings': '通知時間設定',
+    'notification.timeSettingsDescription': '通知を受け取る時間を設定できます',
+    'notification.eveningNotification': '前日夜の通知',
+    'notification.eveningDescription': '収集日前日の夜に通知します',
+    'notification.morningNotification': '当日朝の通知',
+    'notification.morningDescription': '収集日当日の朝に通知します',
+    'notification.time': '時刻',
+    'notification.eveningTimeUpdated': '夜の通知時間を更新しました',
+    'notification.morningTimeUpdated': '朝の通知時間を更新しました',
+    'notification.timeSettingsInfo': '通知時間はお好みに合わせて設定できます',
     
     // Wards
     'ward.kawasaki': '川崎区',
@@ -158,6 +168,7 @@ const translations = {
     'settings.privacyMessage': 'プライバシーポリシー機能は実装予定です。',
     'settings.unset': '未設定',
     'settings.notificationError': '通知設定の更新に失敗しました。',
+    'settings.saved': '保存しました',
     
     // Notification specific
     'notification.permissionDenied': '通知の許可が必要です。設定から通知を有効にしてください。',
@@ -242,6 +253,16 @@ const translations = {
     'notification.title': 'Waste Collection Reminder',
     'notification.tomorrowCollection': 'Tomorrow is {type} collection day',
     'notification.todayCollection': 'Today is {type} collection day',
+    'notification.timeSettings': 'Notification Time Settings',
+    'notification.timeSettingsDescription': 'Set the time you want to receive notifications',
+    'notification.eveningNotification': 'Evening Notification',
+    'notification.eveningDescription': 'Notify on the evening before collection day',
+    'notification.morningNotification': 'Morning Notification',
+    'notification.morningDescription': 'Notify on the morning of collection day',
+    'notification.time': 'Time',
+    'notification.eveningTimeUpdated': 'Evening notification time updated',
+    'notification.morningTimeUpdated': 'Morning notification time updated',
+    'notification.timeSettingsInfo': 'You can customize notification times to your preference',
     
     // Wards
     'ward.kawasaki': 'Kawasaki Ward',
@@ -309,6 +330,7 @@ const translations = {
     'settings.privacyMessage': 'Privacy policy feature is under development.',
     'settings.unset': 'Not set',
     'settings.notificationError': 'Failed to update notification settings.',
+    'settings.saved': 'Saved',
     
     // Notification specific
     'notification.permissionDenied': 'Notification permission is required. Please enable notifications in settings.',
@@ -460,6 +482,7 @@ const translations = {
     'settings.privacyMessage': '隐私政策功能正在开发中。',
     'settings.unset': '未设置',
     'settings.notificationError': '更新通知设置失败。',
+    'settings.saved': '已保存',
     
     // Notification specific
     'notification.permissionDenied': '需要通知权限。请在设置中启用通知。',
@@ -611,6 +634,7 @@ const translations = {
     'settings.privacyMessage': '개인정보 처리방침 기능은 개발 중입니다.',
     'settings.unset': '설정되지 않음',
     'settings.notificationError': '알림 설정 업데이트에 실패했습니다.',
+    'settings.saved': '저장됨',
     
     // Notification specific
     'notification.permissionDenied': '알림 권한이 필요합니다. 설정에서 알림을 활성화해 주세요.',

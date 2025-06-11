@@ -265,7 +265,7 @@ export default function SettingsScreen() {
             subtitle={t('settings.notificationTimeSubtitle')}
             value={t('settings.notificationTimeValue')}
             icon="⏰"
-            onPress={() => Alert.alert(t('settings.notificationTime'), t('settings.notificationTimeMessage'))}
+            onPress={() => router.push('/notification-time-settings')}
           />
         )}
       </ThemedView>
