@@ -21,6 +21,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm install` - Install all dependencies
 - When installing new dependencies that may have peer dependency conflicts with React 19, use `npm install --legacy-peer-deps`
 
+### Package Management Rules
+- **IMPORTANT**: Always run `npm install --legacy-peer-deps` after adding new dependencies to update package-lock.json
+- This prevents `npm ci` errors: "npm ci can only install packages when your package.json and package-lock.json are in sync"
+- After modifying package.json:
+  1. Run `npm install --legacy-peer-deps`
+  2. Verify with `npm ci --legacy-peer-deps` to ensure it works
+  3. Commit both package.json and package-lock.json together
+
 ## Architecture
 
 This is a React Native Expo project using:
