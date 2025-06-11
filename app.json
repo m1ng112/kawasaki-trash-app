@@ -1,36 +1,38 @@
 {
   "expo": {
     "name": "川崎市ごみ分別アプリ",
-    "slug": "kawasaki-trash-app",
+    "slug": "kawasaki-trash",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/react-logo.png",
     "scheme": "kawasaki-trash",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.kawasakitrashapp"
+      "bundleIdentifier": "com.anonymous.kawasakitrashapp",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/react-logo.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.kawasakitrashapp"
+      "package": "com.anonymous.kawasakitrashapp",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/react-logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/react-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -39,7 +41,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/images/icon.png",
+          "icon": "./assets/images/react-logo.png",
           "color": "#ffffff",
           "defaultChannel": "default"
         }
@@ -47,6 +49,16 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "11882c15-bb0e-4478-bd91-7a826bc2d3cc"
+      }
+    },
+    "owner": "ko-with-ja",
+    "privacy": "public",
+    "privacyPolicyUrl": "https://yourusername.github.io/kawasaki-trash/privacy-policy.html",
+    "supportUrl": "https://yourusername.github.io/kawasaki-trash/"
   }
 }

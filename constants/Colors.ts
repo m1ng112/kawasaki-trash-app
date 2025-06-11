@@ -10,11 +10,21 @@ export const Colors = {
   accent: '#9C27B0',       // Purple (camera/AI functions)
   danger: '#F44336',       // Red (notifications/important)
   
-  // Waste category colors
+  // Waste category colors (original)
   burnable: '#4CAF50',     // Green for burnable waste
   recyclable: '#2196F3',   // Blue for recyclable waste
   nonBurnable: '#FF9800',  // Orange for non-burnable waste
   oversized: '#9C27B0',    // Purple for oversized waste
+  
+  // New specific waste category colors
+  normalGarbage: '#4CAF50',      // Green for normal garbage (普通ゴミ)
+  cansBottles: '#2196F3',        // Blue for cans & PET bottles (空き缶・ペットボトル)
+  glassBottles: '#00BCD4',       // Cyan for glass bottles (空きびん)
+  usedBatteries: '#F44336',      // Red for used batteries (使用済み乾電池)
+  mixedPaper: '#FF9800',         // Orange for mixed paper (ミックスペーパー)
+  plasticPackaging: '#9C27B0',   // Purple for plastic packaging (プラスチック製容器包装)
+  smallMetal: '#795548',         // Brown for small metal items (小物金属)
+  oversizedWaste: '#9E9E9E',     // Gray for oversized waste (粗大ごみ - not shown in calendar)
 
   light: {
     text: '#333333',         // Main text

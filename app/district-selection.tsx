@@ -22,20 +22,16 @@ export default function DistrictSelectionScreen() {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme ?? 'light'];
 
-  const handleSelectDistrict = async (districtId: string) => {
+  const handleSelectDistrict = async (district: typeof DISTRICTS[0]) => {
     try {
-      // Save both keys for compatibility
-      await AsyncStorage.setItem('selectedWard', districtId);
-      await AsyncStorage.setItem('selectedDistrict', districtId);
+      // Save the ward temporarily (will be finalized after town selection)
+      await AsyncStorage.setItem('tempSelectedWard', district.name);
       
-      // Mark onboarding as completed
-      await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
-      await AsyncStorage.setItem('onboardingStep', 'completed');
-      
-      // Schedule notifications for the selected area
-      await NotificationService.updateNotificationsForUserArea();
-      
-      router.replace('/(tabs)');
+      // Navigate to town selection with the ward name
+      router.push({
+        pathname: '/town-selection',
+        params: { ward: district.name }
+      });
     } catch (error) {
       Alert.alert('Error', 'Failed to save district selection');
     }
@@ -59,7 +55,7 @@ export default function DistrictSelectionScreen() {
                 borderColor: colorScheme === 'dark' ? colors.border : '#00000010',
               },
             ]}
-            onPress={() => handleSelectDistrict(district.id)}
+            onPress={() => handleSelectDistrict(district)}
             activeOpacity={0.7}
           >
             <ThemedText style={styles.districtName}>{district.name}</ThemedText>

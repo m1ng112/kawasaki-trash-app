@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>川崎市ごみ分別アプリ - プライバシーポリシー</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #007AFF, #0051D5);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 18px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #007AFF;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        
+        h3 {
+            margin: 25px 0 15px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .last-updated {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+        .highlight {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #007AFF;
+            margin: 15px 0;
+        }
+        
+        .language-switcher {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .language-switcher a {
+            color: #007AFF;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 5px 10px;
+            border: 1px solid #007AFF;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .language-switcher a:hover {
+            background: #007AFF;
+            color: white;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="app-icon">🔒</div>
+            <h1>プライバシーポリシー</h1>
+            <p class="subtitle">Privacy Policy</p>
+        </div>
+        
+        <div class="language-switcher">
+            <a href="#ja" onclick="showLanguage('ja')">日本語</a>
+            <a href="#en" onclick="showLanguage('en')">English</a>
+            <a href="#zh" onclick="showLanguage('zh')">中文</a>
+            <a href="#ko" onclick="showLanguage('ko')">한국어</a>
+        </div>
+
+        <!-- Japanese Content -->
+        <div id="content-ja" class="content">
+            <div class="last-updated">最終更新日: 2024年1月1日</div>
+            
+            <div class="section">
+                <h3>はじめに</h3>
+                <p>本アプリケーション「川崎市ごみ分別アプリ」は、利用者のプライバシーを尊重し、個人情報の保護に努めています。</p>
+            </div>
+            
+            <div class="section">
+                <h3>収集する情報</h3>
+                <p>本アプリは以下の情報を収集する場合があります：</p>
+                
+                <div class="highlight">
+                    <h4>1. 位置情報</h4>
+                    <ul>
+                        <li>収集目的：お住まいの地域に基づいたごみ収集スケジュールの提供</li>
+                        <li>収集方法：ユーザーの明示的な許可を得た上で収集</li>
+                        <li>保存場所：端末内のみ（外部サーバーには送信されません）</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>2. 選択した地域情報</h4>
+                    <ul>
+                        <li>収集目的：適切なごみ収集スケジュールの表示</li>
+                        <li>保存場所：端末内のみ</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>3. 通知設定</h4>
+                    <ul>
+                        <li>収集目的：ごみ収集日のリマインダー通知</li>
+                        <li>保存場所：端末内のみ</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>情報の利用目的</h3>
+                <p>収集した情報は以下の目的でのみ使用されます：</p>
+                <ul>
+                    <li>正確なごみ収集スケジュールの提供</li>
+                    <li>ごみ収集日の通知</li>
+                    <li>アプリの機能改善</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>第三者への提供</h3>
+                <p>本アプリは、利用者の個人情報を第三者に販売、取引、または譲渡することはありません。</p>
+            </div>
+            
+            <div class="section">
+                <h3>データの保存</h3>
+                <p>すべてのデータは利用者の端末内にのみ保存され、外部サーバーには送信されません。</p>
+            </div>
+            
+            <div class="section">
+                <h3>セキュリティ</h3>
+                <p>本アプリは、利用者の情報を保護するために適切なセキュリティ対策を実施しています。</p>
+            </div>
+            
+            <div class="section">
+                <h3>子どものプライバシー</h3>
+                <p>本アプリは13歳未満の子どもから意図的に個人情報を収集することはありません。</p>
+            </div>
+            
+            <div class="section">
+                <h3>変更について</h3>
+                <p>本プライバシーポリシーは予告なく変更される場合があります。変更があった場合は、アプリ内でお知らせします。</p>
+            </div>
+            
+            <div class="section">
+                <h3>お問い合わせ</h3>
+                <p>プライバシーポリシーに関するご質問は、アプリ内の設定画面からお問い合わせください。</p>
+            </div>
+        </div>
+
+        <!-- English Content -->
+        <div id="content-en" class="content" style="display:none;">
+            <div class="last-updated">Last updated: January 1, 2024</div>
+            
+            <div class="section">
+                <h3>Introduction</h3>
+                <p>The "Kawasaki City Waste Sorting App" respects user privacy and is committed to protecting personal information.</p>
+            </div>
+            
+            <div class="section">
+                <h3>Information We Collect</h3>
+                <p>The App may collect the following information:</p>
+                
+                <div class="highlight">
+                    <h4>1. Location Information</h4>
+                    <ul>
+                        <li>Purpose: To provide waste collection schedules based on your area</li>
+                        <li>Collection method: Collected with explicit user permission</li>
+                        <li>Storage: Device only (not sent to external servers)</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>2. Selected Area Information</h4>
+                    <ul>
+                        <li>Purpose: To display appropriate waste collection schedules</li>
+                        <li>Storage: Device only</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>3. Notification Settings</h4>
+                    <ul>
+                        <li>Purpose: Waste collection day reminder notifications</li>
+                        <li>Storage: Device only</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Use of Information</h3>
+                <p>Collected information is used only for:</p>
+                <ul>
+                    <li>Providing accurate waste collection schedules</li>
+                    <li>Sending waste collection notifications</li>
+                    <li>Improving app functionality</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>Third-Party Disclosure</h3>
+                <p>The App does not sell, trade, or transfer user personal information to third parties.</p>
+            </div>
+            
+            <div class="section">
+                <h3>Data Storage</h3>
+                <p>All data is stored only on the user's device and is not transmitted to external servers.</p>
+            </div>
+            
+            <div class="section">
+                <h3>Security</h3>
+                <p>The App implements appropriate security measures to protect user information.</p>
+            </div>
+            
+            <div class="section">
+                <h3>Children's Privacy</h3>
+                <p>The App does not intentionally collect personal information from children under 13.</p>
+            </div>
+            
+            <div class="section">
+                <h3>Changes</h3>
+                <p>This privacy policy may be updated without notice. Changes will be notified within the app.</p>
+            </div>
+            
+            <div class="section">
+                <h3>Contact</h3>
+                <p>For questions about this privacy policy, please contact us through the app's settings screen.</p>
+            </div>
+        </div>
+
+        <!-- Chinese Content -->
+        <div id="content-zh" class="content" style="display:none;">
+            <div class="last-updated">最后更新：2024年1月1日</div>
+            
+            <div class="section">
+                <h3>简介</h3>
+                <p>"川崎市垃圾分类应用"尊重用户隐私，致力于保护个人信息。</p>
+            </div>
+            
+            <div class="section">
+                <h3>我们收集的信息</h3>
+                <p>本应用可能收集以下信息：</p>
+                
+                <div class="highlight">
+                    <h4>1. 位置信息</h4>
+                    <ul>
+                        <li>目的：根据您所在地区提供垃圾收集时间表</li>
+                        <li>收集方式：在获得用户明确许可后收集</li>
+                        <li>存储：仅在设备上（不发送到外部服务器）</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>2. 选择的地区信息</h4>
+                    <ul>
+                        <li>目的：显示适当的垃圾收集时间表</li>
+                        <li>存储：仅在设备上</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>3. 通知设置</h4>
+                    <ul>
+                        <li>目的：垃圾收集日提醒通知</li>
+                        <li>存储：仅在设备上</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>信息使用</h3>
+                <p>收集的信息仅用于：</p>
+                <ul>
+                    <li>提供准确的垃圾收集时间表</li>
+                    <li>发送垃圾收集通知</li>
+                    <li>改进应用功能</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>第三方披露</h3>
+                <p>本应用不会向第三方出售、交易或转让用户个人信息。</p>
+            </div>
+            
+            <div class="section">
+                <h3>数据存储</h3>
+                <p>所有数据仅存储在用户设备上，不会传输到外部服务器。</p>
+            </div>
+            
+            <div class="section">
+                <h3>安全性</h3>
+                <p>本应用实施适当的安全措施来保护用户信息。</p>
+            </div>
+            
+            <div class="section">
+                <h3>儿童隐私</h3>
+                <p>本应用不会故意收集13岁以下儿童的个人信息。</p>
+            </div>
+            
+            <div class="section">
+                <h3>变更</h3>
+                <p>本隐私政策可能会在不另行通知的情况下更新。更改将在应用内通知。</p>
+            </div>
+            
+            <div class="section">
+                <h3>联系方式</h3>
+                <p>有关隐私政策的问题，请通过应用的设置界面与我们联系。</p>
+            </div>
+        </div>
+
+        <!-- Korean Content -->
+        <div id="content-ko" class="content" style="display:none;">
+            <div class="last-updated">최종 업데이트: 2024년 1월 1일</div>
+            
+            <div class="section">
+                <h3>소개</h3>
+                <p>"가와사키시 쓰레기 분리 앱"은 사용자의 개인정보를 존중하고 보호하기 위해 노력합니다.</p>
+            </div>
+            
+            <div class="section">
+                <h3>수집하는 정보</h3>
+                <p>본 앱은 다음 정보를 수집할 수 있습니다:</p>
+                
+                <div class="highlight">
+                    <h4>1. 위치 정보</h4>
+                    <ul>
+                        <li>목적: 거주 지역에 따른 쓰레기 수거 일정 제공</li>
+                        <li>수집 방법: 사용자의 명시적 허가 후 수집</li>
+                        <li>저장: 기기에만 저장 (외부 서버로 전송되지 않음)</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>2. 선택한 지역 정보</h4>
+                    <ul>
+                        <li>목적: 적절한 쓰레기 수거 일정 표시</li>
+                        <li>저장: 기기에만 저장</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <h4>3. 알림 설정</h4>
+                    <ul>
+                        <li>목적: 쓰레기 수거일 알림</li>
+                        <li>저장: 기기에만 저장</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>정보 사용</h3>
+                <p>수집된 정보는 다음 목적으로만 사용됩니다:</p>
+                <ul>
+                    <li>정확한 쓰레기 수거 일정 제공</li>
+                    <li>쓰레기 수거 알림 전송</li>
+                    <li>앱 기능 개선</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>제3자 제공</h3>
+                <p>본 앱은 사용자의 개인정보를 제3자에게 판매, 거래 또는 양도하지 않습니다.</p>
+            </div>
+            
+            <div class="section">
+                <h3>데이터 저장</h3>
+                <p>모든 데이터는 사용자의 기기에만 저장되며 외부 서버로 전송되지 않습니다.</p>
+            </div>
+            
+            <div class="section">
+                <h3>보안</h3>
+                <p>본 앱은 사용자 정보를 보호하기 위해 적절한 보안 조치를 시행합니다.</p>
+            </div>
+            
+            <div class="section">
+                <h3>아동 개인정보 보호</h3>
+                <p>본 앱은 13세 미만 아동으로부터 의도적으로 개인정보를 수집하지 않습니다.</p>
+            </div>
+            
+            <div class="section">
+                <h3>변경사항</h3>
+                <p>본 개인정보 처리방침은 사전 통지 없이 변경될 수 있습니다. 변경사항은 앱 내에서 알려드립니다.</p>
+            </div>
+            
+            <div class="section">
+                <h3>문의</h3>
+                <p>개인정보 처리방침에 대한 문의는 앱의 설정 화면을 통해 연락해 주십시오.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 川崎市ごみ分別アプリ. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        function showLanguage(lang) {
+            // Hide all content divs
+            document.querySelectorAll('[id^="content-"]').forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // Show selected language content
+            document.getElementById('content-' + lang).style.display = 'block';
+            
+            // Update active language button style
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                link.style.background = '';
+                link.style.color = '#007AFF';
+            });
+            event.target.style.background = '#007AFF';
+            event.target.style.color = 'white';
+        }
+        
+        // Show Japanese by default
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.language-switcher a[href="#ja"]').style.background = '#007AFF';
+            document.querySelector('.language-switcher a[href="#ja"]').style.color = 'white';
+        });
+    </script>
+</body>
+</html>

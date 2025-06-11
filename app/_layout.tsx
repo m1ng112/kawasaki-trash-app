@@ -5,8 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { LocalizationProvider } from '@/contexts/LocalizationContext';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { NotificationService } from '@/services/notificationService';
 
 export default function RootLayout() {
@@ -42,6 +42,27 @@ export default function RootLayout() {
             options={{ 
               headerShown: false,
               gestureEnabled: false,
+            }} 
+          />
+          <Stack.Screen 
+            name="town-selection" 
+            options={{ 
+              headerShown: false,
+              gestureEnabled: false,
+            }} 
+          />
+          <Stack.Screen 
+            name="terms-of-service" 
+            options={{ 
+              headerShown: true,
+              presentation: 'modal',
+            }} 
+          />
+          <Stack.Screen 
+            name="privacy-policy" 
+            options={{ 
+              headerShown: true,
+              presentation: 'modal',
             }} 
           />
           <Stack.Screen name="+not-found" />

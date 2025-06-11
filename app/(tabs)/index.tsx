@@ -20,6 +20,9 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { Colors } from '@/constants/Colors';
 import { kawasakiAreas } from '@/data/areas';
+import { getAreaByWardAndTown, getAreasByWardComprehensive } from '@/data/comprehensiveAreas';
+import { getAreaScheduleData } from '@/data/scheduleData';
+import { getTodayCollection, getNextCollection } from '@/data/scheduleCalculator';
 import { getCategoryDisplayName } from '@/data/categoryHelper';
 import type { Area, WasteCategory, CollectionInfo } from '@/types';
 
@@ -100,6 +103,36 @@ export default function HomeScreen() {
 
   const loadUserArea = async () => {
     try {
+      // First try to load by specific area ID (for new town selection flow)
+      const savedAreaId = await AsyncStorage.getItem('selectedAreaId');
+      const savedTown = await AsyncStorage.getItem('selectedTown');
+      
+      if (savedAreaId && savedTown) {
+        // Try to find the specific area from schedule data first
+        const scheduleArea = getAreaScheduleData(savedAreaId);
+        if (scheduleArea) {
+          setSelectedArea(scheduleArea);
+          return;
+        }
+        
+        // Fallback: Try to find by ward and town
+        const ward = savedAreaId.split('-')[0];
+        const area = getAreaByWardAndTown(ward, savedTown);
+        if (area) {
+          setSelectedArea(area);
+          return;
+        }
+        
+        // Final fallback: find the first area in the ward and update its name
+        const areas = kawasakiAreas.filter(area => area.ward === ward);
+        if (areas.length > 0) {
+          const selectedArea = { ...areas[0], area: savedTown };
+          setSelectedArea(selectedArea);
+          return;
+        }
+      }
+      
+      // Fallback to old ward-based selection for backward compatibility
       const savedWard = await AsyncStorage.getItem('selectedWard');
       if (savedWard) {
         const areas = kawasakiAreas.filter(area => area.ward === savedWard);
@@ -115,70 +148,43 @@ export default function HomeScreen() {
   const calculateCollectionInfo = () => {
     if (!selectedArea) return;
 
-    const today = new Date();
-    const todayDay = today.getDay();
-    
-    // Check today's collection
-    const todayTypes: WasteCategory[] = [];
-    if (selectedArea.schedule.burnable.includes(todayDay)) {
-      todayTypes.push('burnable');
-    }
-    if (selectedArea.schedule.recyclable.includes(todayDay)) {
-      todayTypes.push('recyclable');
-    }
-    if (selectedArea.schedule.nonBurnable.includes(todayDay)) {
-      todayTypes.push('nonBurnable');
+    // Get today's collection using new calculation logic
+    const todayInfo = getTodayCollection(selectedArea);
+    if (todayInfo) {
+      setTodayCollection(todayInfo);
+    } else {
+      setTodayCollection(null);
     }
 
-    if (todayTypes.length > 0) {
-      setTodayCollection({
-        date: today.toISOString().split('T')[0],
-        types: todayTypes,
-      });
-    }
-
-    // Calculate next collection
-    let nextDate = new Date(today);
-    nextDate.setDate(nextDate.getDate() + 1);
-    
-    for (let i = 1; i <= 7; i++) {
-      const checkDay = nextDate.getDay();
-      const nextTypes: WasteCategory[] = [];
-      
-      if (selectedArea.schedule.burnable.includes(checkDay)) {
-        nextTypes.push('burnable');
-      }
-      if (selectedArea.schedule.recyclable.includes(checkDay)) {
-        nextTypes.push('recyclable');
-      }
-      if (selectedArea.schedule.nonBurnable.includes(checkDay)) {
-        nextTypes.push('nonBurnable');
-      }
-
-      if (nextTypes.length > 0) {
-        setNextCollection({
-          date: nextDate.toISOString().split('T')[0],
-          types: nextTypes,
-        });
-        break;
-      }
-
-      nextDate.setDate(nextDate.getDate() + 1);
+    // Get next collection using new calculation logic
+    const nextInfo = getNextCollection(selectedArea);
+    if (nextInfo) {
+      setNextCollection(nextInfo);
+    } else {
+      setNextCollection(null);
     }
   };
 
   const getWasteCategoryColor = (category: WasteCategory): string => {
     switch (category) {
-      case 'burnable':
-        return colors.burnable;
-      case 'recyclable':
-        return colors.recyclable;
-      case 'nonBurnable':
-        return colors.nonBurnable;
-      case 'oversized':
-        return colors.oversized;
+      case 'normalGarbage':      // 普通ゴミ (燃やすゴミ)
+        return Colors.normalGarbage;
+      case 'cansBottles':        // 空き缶・ペットボトル
+        return Colors.cansBottles;
+      case 'glassBottles':       // 空きびん
+        return Colors.glassBottles;
+      case 'usedBatteries':      // 使用済み乾電池
+        return Colors.usedBatteries;
+      case 'mixedPaper':         // ミックスペーパー
+        return Colors.mixedPaper;
+      case 'plasticPackaging':   // プラスチック製容器包装
+        return Colors.plasticPackaging;
+      case 'smallMetal':         // 小物金属
+        return Colors.smallMetal;
+      case 'oversizedWaste':     // 粗大ごみ (normally not displayed)
+        return Colors.oversizedWaste;
       default:
-        return colors.primary;
+        return Colors.primary;
     }
   };
 
@@ -188,14 +194,22 @@ export default function HomeScreen() {
 
   const getWasteCategoryIcon = (category: WasteCategory): string => {
     switch (category) {
-      case 'burnable':
+      case 'normalGarbage':      // 普通ゴミ (燃やすゴミ)
         return 'flame';
-      case 'recyclable':
-        return 'recycle';
-      case 'nonBurnable':
-        return 'trash-bin';
-      case 'oversized':
+      case 'cansBottles':        // 空き缶・ペットボトル
+        return 'water';
+      case 'glassBottles':       // 空きびん
+        return 'wine';
+      case 'usedBatteries':      // 使用済み乾電池
+        return 'battery-full';
+      case 'mixedPaper':         // ミックスペーパー
+        return 'document-text';
+      case 'plasticPackaging':   // プラスチック製容器包装
         return 'cube';
+      case 'smallMetal':         // 小物金属
+        return 'construct';
+      case 'oversizedWaste':     // 粗大ごみ (normally not displayed)
+        return 'build';
       default:
         return 'trash';
     }

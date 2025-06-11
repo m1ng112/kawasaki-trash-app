@@ -9,6 +9,8 @@ import { useLocalization } from '@/contexts/LocalizationContext';
 import { Colors } from '@/constants/Colors';
 import { commonStyles } from '@/styles/common';
 import { kawasakiAreas } from '@/data/areas';
+import { getAreaScheduleData } from '@/data/scheduleData';
+import { getCollectionTypes } from '@/data/scheduleCalculator';
 import { isHoliday, getHoliday } from '@/data/holidays';
 import { getCategoryDisplayName } from '@/data/categoryHelper';
 import type { Area, WasteCategory } from '@/types';
@@ -54,6 +56,20 @@ export default function CalendarScreen() {
 
   const loadUserArea = async () => {
     try {
+      // First try to load by specific area ID (for new town selection flow)
+      const savedAreaId = await AsyncStorage.getItem('selectedAreaId');
+      const savedTown = await AsyncStorage.getItem('selectedTown');
+      
+      if (savedAreaId && savedTown) {
+        // Try to find the specific area from schedule data first
+        const scheduleArea = getAreaScheduleData(savedAreaId);
+        if (scheduleArea) {
+          setSelectedArea(scheduleArea);
+          return;
+        }
+      }
+      
+      // Fallback to old ward-based selection for backward compatibility
       const savedWard = await AsyncStorage.getItem('selectedWard');
       if (savedWard) {
         const areas = kawasakiAreas.filter(area => area.ward === savedWard);
@@ -76,8 +92,6 @@ export default function CalendarScreen() {
 
     while (currentDate <= endDate) {
       const dateString = currentDate.toISOString().split('T')[0];
-      const dayOfWeek = currentDate.getDay();
-      const collectionTypes: WasteCategory[] = [];
 
       // Check if it's a holiday
       if (isHoliday(dateString)) {
@@ -97,16 +111,8 @@ export default function CalendarScreen() {
           holiday: holiday?.name || '',
         };
       } else {
-        // Check regular collection schedule
-        if (selectedArea.schedule.burnable.includes(dayOfWeek)) {
-          collectionTypes.push('burnable');
-        }
-        if (selectedArea.schedule.recyclable.includes(dayOfWeek)) {
-          collectionTypes.push('recyclable');
-        }
-        if (selectedArea.schedule.nonBurnable.includes(dayOfWeek)) {
-          collectionTypes.push('nonBurnable');
-        }
+        // Use new schedule calculation logic
+        const collectionTypes = getCollectionTypes(currentDate, selectedArea);
 
         if (collectionTypes.length > 0) {
           const primaryType = collectionTypes[0];
@@ -155,6 +161,23 @@ export default function CalendarScreen() {
 
   const getWasteCategoryColor = (category: WasteCategory): string => {
     switch (category) {
+      case 'normalGarbage':      // 普通ゴミ (燃やすゴミ)
+        return Colors.normalGarbage;
+      case 'cansBottles':        // 空き缶・ペットボトル
+        return Colors.cansBottles;
+      case 'glassBottles':       // 空きびん
+        return Colors.glassBottles;
+      case 'usedBatteries':      // 使用済み乾電池
+        return Colors.usedBatteries;
+      case 'mixedPaper':         // ミックスペーパー
+        return Colors.mixedPaper;
+      case 'plasticPackaging':   // プラスチック製容器包装
+        return Colors.plasticPackaging;
+      case 'smallMetal':         // 小物金属
+        return Colors.smallMetal;
+      case 'oversizedWaste':     // 粗大ごみ (normally not displayed)
+        return Colors.oversizedWaste;
+      // Keep old categories for backward compatibility
       case 'burnable':
         return Colors.burnable;
       case 'recyclable':
@@ -164,7 +187,7 @@ export default function CalendarScreen() {
       case 'oversized':
         return Colors.oversized;
       default:
-        return Colors.primary;
+        return colors.tint;
     }
   };
 
@@ -186,8 +209,11 @@ export default function CalendarScreen() {
     const dateInfo = markedDates[selectedDate];
     const selectedDateObj = new Date(selectedDate);
     const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][selectedDateObj.getDay()];
+    
+    // Get collection types for the selected date
+    const collectionTypes = selectedArea ? getCollectionTypes(selectedDateObj, selectedArea) : [];
 
-    if (!dateInfo || (!dateInfo.types && !dateInfo.holiday)) {
+    if (!dateInfo || (collectionTypes.length === 0 && !dateInfo.holiday)) {
       return (
         <ThemedView style={[commonStyles.card, colorScheme === 'dark' ? commonStyles.cardDark : {}]}>
           <ThemedText style={styles.dateHeader}>
@@ -218,8 +244,8 @@ export default function CalendarScreen() {
       );
     }
 
-    if (dateInfo.types && dateInfo.types.length > 0) {
-      const primaryColor = getWasteCategoryColor(dateInfo.types[0]);
+    if (collectionTypes.length > 0) {
+      const primaryColor = getWasteCategoryColor(collectionTypes[0]);
       
       return (
         <ThemedView style={[
@@ -231,7 +257,7 @@ export default function CalendarScreen() {
             {selectedDateObj.getMonth() + 1}月{selectedDateObj.getDate()}日（{dayOfWeek}）
           </ThemedText>
           <ThemedText style={[styles.wasteType, { color: primaryColor }]}>
-            {dateInfo.types.map((type: WasteCategory) => getWasteCategoryName(type)).join(' • ')}
+            {collectionTypes.map((type: WasteCategory) => getWasteCategoryName(type)).join(' • ')}
           </ThemedText>
           <ThemedText style={styles.infoText}>
             {language === 'ja' ? '朝8時までに指定場所に出してください' : 'Put out waste by 8:00 AM at designated location'}

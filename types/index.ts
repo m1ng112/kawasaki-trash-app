@@ -3,21 +3,29 @@
 // Supported languages
 export type Language = 'ja' | 'en' | 'zh' | 'ko';
 
-// Waste categories
-export type WasteCategory = 'burnable' | 'recyclable' | 'nonBurnable' | 'oversized';
+// Waste categories (based on actual Kawasaki City garbage types)
+export type WasteCategory = 
+  | 'normalGarbage'      // 普通ゴミ (燃やすゴミ)
+  | 'cansBottles'        // 空き缶・ペットボトル
+  | 'glassBottles'       // 空きびん
+  | 'usedBatteries'      // 使用済み乾電池
+  | 'mixedPaper'         // ミックスペーパー
+  | 'plasticPackaging'   // プラスチック製容器包装
+  | 'smallMetal'         // 小物金属
+  | 'oversizedWaste';    // 粗大ごみ (カレンダー表示なし)
 
 // Days of the week (0 = Sunday, 1 = Monday, etc.)
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 // Kawasaki city wards
 export type Ward = 
-  | 'kawasaki'
-  | 'saiwai'
-  | 'nakahara'
-  | 'takatsu'
-  | 'miyamae'
-  | 'tama'
-  | 'asao';
+  | '川崎区'
+  | '幸区'
+  | '中原区'
+  | '高津区'
+  | '宮前区'
+  | '多摩区'
+  | '麻生区';
 
 // Area/District information
 export interface Area {
@@ -29,10 +37,14 @@ export interface Area {
 
 // Collection schedule for each waste type
 export interface CollectionSchedule {
-  burnable: DayOfWeek[];       // e.g., [1, 4] for Monday and Thursday
-  recyclable: DayOfWeek[];     // e.g., [2] for Tuesday
-  nonBurnable: DayOfWeek[];    // e.g., [3] for Wednesday (monthly)
-  oversized?: string;          // Special collection info
+  normalGarbage: DayOfWeek[];                           // 普通ゴミ (燃やすゴミ)
+  cansBottles: DayOfWeek[];                            // 空き缶・ペットボトル
+  glassBottles: DayOfWeek[];                           // 空きびん
+  usedBatteries: DayOfWeek[];                          // 使用済み乾電池
+  mixedPaper: DayOfWeek[];                             // ミックスペーパー
+  plasticPackaging: DayOfWeek[];                       // プラスチック製容器包装 (毎週収集)
+  smallMetal: { weekday: DayOfWeek; weeks: number[] };       // 小物金属 (第○・○回目)
+  oversizedWaste?: { weekday: DayOfWeek; weeks: number[] };  // 粗大ごみ (カレンダー表示なし・オプショナル)
 }
 
 // Waste item information

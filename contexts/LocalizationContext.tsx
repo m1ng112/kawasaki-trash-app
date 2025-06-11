@@ -143,6 +143,7 @@ const translations = {
     'settings.legal': '利用規約・プライバシー',
     'settings.terms': '利用規約',
     'settings.termsSubtitle': 'アプリの利用規約を確認',
+    'settings.termsOfService': '利用規約',
     'settings.privacy': 'プライバシーポリシー',
     'settings.privacySubtitle': 'プライバシーポリシーを確認',
     'settings.appName': '川崎市ごみ分別アプリ',
@@ -293,6 +294,7 @@ const translations = {
     'settings.legal': 'Terms & Privacy',
     'settings.terms': 'Terms of Service',
     'settings.termsSubtitle': 'View terms of service',
+    'settings.termsOfService': 'Terms of Service',
     'settings.privacy': 'Privacy Policy',
     'settings.privacySubtitle': 'View privacy policy',
     'settings.appName': 'Kawasaki City Waste Sorting App',
@@ -443,6 +445,7 @@ const translations = {
     'settings.legal': '条款和隐私',
     'settings.terms': '服务条款',
     'settings.termsSubtitle': '查看服务条款',
+    'settings.termsOfService': '服务条款',
     'settings.privacy': '隐私政策',
     'settings.privacySubtitle': '查看隐私政策',
     'settings.appName': '川崎市垃圾分类应用',
@@ -593,6 +596,7 @@ const translations = {
     'settings.legal': '약관 및 개인정보',
     'settings.terms': '이용약관',
     'settings.termsSubtitle': '이용약관 보기',
+    'settings.termsOfService': '이용약관',
     'settings.privacy': '개인정보 처리방침',
     'settings.privacySubtitle': '개인정보 처리방침 보기',
     'settings.appName': '가와사키시 쓰레기 분리배출 앱',
@@ -613,7 +617,7 @@ const translations = {
   },
 };
 
-const LocalizationContext = createContext<LocalizationContextType | undefined>(undefined);
+export const LocalizationContext = createContext<LocalizationContextType | undefined>(undefined);
 
 export function LocalizationProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('ja');

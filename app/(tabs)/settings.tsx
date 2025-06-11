@@ -76,6 +76,7 @@ export default function SettingsScreen() {
   } = useNotifications();
   
   const [selectedWard, setSelectedWard] = useState<Ward | null>(null);
+  const [selectedTown, setSelectedTown] = useState<string | null>(null);
   const [appVersion] = useState('1.0.0');
 
   useEffect(() => {
@@ -85,8 +86,12 @@ export default function SettingsScreen() {
   const loadSettings = async () => {
     try {
       const savedWard = await AsyncStorage.getItem('selectedWard');
+      const savedTown = await AsyncStorage.getItem('selectedTown');
       if (savedWard) {
         setSelectedWard(savedWard as Ward);
+      }
+      if (savedTown) {
+        setSelectedTown(savedTown);
       }
     } catch (error) {
       console.error('Error loading settings:', error);
@@ -125,6 +130,8 @@ export default function SettingsScreen() {
               await AsyncStorage.removeItem('hasCompletedOnboarding');
               await AsyncStorage.removeItem('selectedWard');
               await AsyncStorage.removeItem('selectedDistrictName');
+              await AsyncStorage.removeItem('selectedAreaId');
+              await AsyncStorage.removeItem('selectedTown');
               router.replace('/language-selection');
             } catch (error) {
               console.error('Error resetting onboarding:', error);
@@ -193,7 +200,11 @@ export default function SettingsScreen() {
 
   const getCurrentWardName = () => {
     if (!selectedWard) return t('settings.unset');
-    return wardNames.ja[selectedWard] || selectedWard;
+    const wardName = wardNames.ja[selectedWard] || selectedWard;
+    if (selectedTown) {
+      return `${wardName} ${selectedTown}`;
+    }
+    return wardName;
   };
 
   return (
@@ -311,14 +322,14 @@ export default function SettingsScreen() {
           title={t('settings.terms')}
           subtitle={t('settings.termsSubtitle')}
           icon="📄"
-          onPress={() => Alert.alert(t('settings.terms'), t('settings.termsMessage'))}
+          onPress={() => router.push('/terms-of-service')}
         />
         
         <SettingItem
           title={t('settings.privacy')}
           subtitle={t('settings.privacySubtitle')}
           icon="🔒"
-          onPress={() => Alert.alert(t('settings.privacy'), t('settings.privacyMessage'))}
+          onPress={() => router.push('/privacy-policy')}
         />
       </ThemedView>
 

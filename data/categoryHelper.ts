@@ -1,6 +1,57 @@
+import type { Language, WasteCategory } from '@/types';
+
 // Category display names for UI
-export const getCategoryDisplayName = function getCategoryDisplayName(category, language) {
+export const getCategoryDisplayName = function getCategoryDisplayName(category: WasteCategory, language: Language) {
   const displayNames = {
+    normalGarbage: {
+      ja: '普通ゴミ',
+      en: 'Normal Garbage',
+      zh: '普通垃圾',
+      ko: '일반쓰레기'
+    },
+    cansBottles: {
+      ja: '空き缶・ペットボトル',
+      en: 'Empty Cans & PET Bottles',
+      zh: '空罐・PET瓶',
+      ko: '빈캔・페트병'
+    },
+    glassBottles: {
+      ja: '空きびん',
+      en: 'Empty Glass Bottles',
+      zh: '空瓶',
+      ko: '빈병'
+    },
+    usedBatteries: {
+      ja: '使用済み乾電池',
+      en: 'Used Batteries',
+      zh: '废电池',
+      ko: '사용한 건전지'
+    },
+    mixedPaper: {
+      ja: 'ミックスペーパー',
+      en: 'Mixed Paper',
+      zh: '混合纸张',
+      ko: '혼합 종이'
+    },
+    plasticPackaging: {
+      ja: 'プラスチック製容器包装',
+      en: 'Plastic Packaging',
+      zh: '塑料包装',
+      ko: '플라스틱 포장'
+    },
+    smallMetal: {
+      ja: '小物金属',
+      en: 'Small Metal Items',
+      zh: '小型金属',
+      ko: '소형금속'
+    },
+    oversizedWaste: {
+      ja: '粗大ごみ',
+      en: 'Oversized Waste',
+      zh: '大型垃圾',
+      ko: '대형폐기물'
+    },
+    // Keep old categories for backward compatibility
     burnable: {
       ja: '普通ごみ',
       en: 'Burnable Waste',
