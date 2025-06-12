@@ -29,6 +29,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   2. Verify with `npm ci --legacy-peer-deps` to ensure it works
   3. Commit both package.json and package-lock.json together
 
+### iOS Build Issues
+- **C++ Compilation Errors**: If you see errors like "Cannot find module 'yoga/algorithm/AbsoluteLayout.h'" or SDWebImage compilation failures:
+  1. Run `pod install --repo-update` in the root directory to reinstall iOS dependencies
+  2. This fixes missing Yoga layout engine headers and other native dependencies
+  3. The Yoga pod creates header links in `ios/Pods/Headers/Public/Yoga/` and `ios/Pods/Headers/Private/Yoga/`
+
 ## Architecture
 
 This is a React Native Expo project using:
