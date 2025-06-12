@@ -19,43 +19,47 @@ export default function PrivacyPolicyScreen() {
       case 'en':
         return {
           title: 'Privacy Policy',
-          lastUpdated: 'Last updated: January 1, 2024',
+          lastUpdated: 'Last updated: June 12, 2025',
           sections: [
             {
               title: 'Introduction',
-              content: 'The "Kawasaki City Waste Sorting App" respects user privacy and is committed to protecting personal information.'
+              content: 'The "Kawasaki City Waste Sorting App" (hereinafter "the App") respects user privacy and is committed to protecting personal information. This privacy policy clearly explains what information we collect, how we use it, and how we protect it.'
             },
             {
-              title: 'Information We Collect',
-              content: 'The App may collect the following information:\n\n1. Location Information\n• Purpose: To provide waste collection schedules based on your area\n• Collection method: Collected with explicit user permission\n• Storage: Device only (not sent to external servers)\n\n2. Selected Area Information\n• Purpose: To display appropriate waste collection schedules\n• Storage: Device only\n\n3. Notification Settings\n• Purpose: Waste collection day reminder notifications\n• Storage: Device only'
+              title: 'Information We Collect and Purpose',
+              content: 'The App may collect the following information. All data collection occurs only with explicit user consent:\n\n【Location Information】\n• Purpose: To provide waste collection schedules based on your area\n• Collection method: Explicit user permission requested on first app launch\n• Usage: Used only for area determination, no continuous tracking\n• Storage: Device only (not sent to external servers)\n\n【Selected Area Information】\n• Purpose: To display appropriate waste collection schedules\n• Collection method: Manually selected by user\n• Storage: Device only\n\n【Notification Settings】\n• Purpose: Waste collection day reminder notifications\n• Collection method: Only when user enables notifications\n• Storage: Device only\n\n【App Usage Data】\n• Purpose: App stability improvement and crash reporting\n• Collection method: Standard Expo/React Native framework functionality\n• Anonymous data only, cannot identify individuals'
             },
             {
-              title: 'Use of Information',
-              content: 'Collected information is used only for:\n• Providing accurate waste collection schedules\n• Sending waste collection notifications\n• Improving app functionality'
+              title: 'Third-Party Services and SDKs',
+              content: 'The App uses the following third-party services, which provide privacy protection equal to or greater than this privacy policy:\n\n• Expo Platform (expo.dev): Core app technology\n• React Native: UI framework\n• AsyncStorage: Local data storage\n\nThese services do not transmit personal information externally. All data is processed on-device.'
             },
             {
-              title: 'Third-Party Disclosure',
-              content: 'The App does not sell, trade, or transfer user personal information to third parties.'
+              title: 'Data Retention and Deletion',
+              content: '【Data Retention Period】\n• All data is stored only on the device\n• All data is completely deleted when the app is uninstalled\n• No external server data storage\n\n【User Data Deletion】\n1. Individual setting deletion: Reset individual settings from settings screen\n2. Complete data deletion: Uninstall the app\n3. Area setting reset: Select "Change Area" from settings screen'
             },
             {
-              title: 'Data Storage',
-              content: 'All data is stored only on the user\'s device and is not transmitted to external servers.'
+              title: 'Consent Withdrawal and User Rights',
+              content: 'Users have the following rights:\n\n【Consent Withdrawal】\n• Location access: Can be disabled from device settings\n• Notifications: Can be disabled from app settings or device settings\n• Consent can be withdrawn at any time, core app functionality remains available\n\n【Alternative Solutions】\n• If location access is denied: Manual area selection is available\n• If notifications are disabled: Schedule viewing via calendar display is available\n\n【Data Access and Correction】\n• View stored data: Current settings displayed in settings screen\n• Data correction: Can be changed anytime from settings screen'
+            },
+            {
+              title: 'Data Minimization',
+              content: 'The App follows the principle of "data minimization":\n\n• Collects only minimum data necessary for core functionality (waste collection schedule display)\n• Does not collect unnecessary personal information (name, email address, etc.)\n• No account creation or personal information input required\n• Location information used only for area determination, not continuous tracking'
             },
             {
               title: 'Security',
-              content: 'The App implements appropriate security measures to protect user information.'
+              content: 'The App implements the following security measures to protect user information:\n\n• All data stored with local encryption\n• Minimizes data leak risk by not performing network communication\n• Regular security audits conducted\n• Uses frameworks compliant with latest security standards'
             },
             {
               title: 'Children\'s Privacy',
-              content: 'The App does not intentionally collect personal information from children under 13.'
+              content: 'The App does not intentionally collect personal information from children under 13. If we learn that a child under 13 has provided personal information, we will promptly delete such information. If you are a parent and believe your child has provided personal information, please contact us.'
             },
             {
-              title: 'Changes',
-              content: 'This privacy policy may be updated without notice. Changes will be notified within the app.'
+              title: 'Privacy Policy Changes',
+              content: 'When this privacy policy is changed, we will notify users in advance within the app and seek user consent. For significant changes, we will clearly display them at app startup, and continued use will require consent to the new policy. Change history can be viewed within the app.'
             },
             {
-              title: 'Contact',
-              content: 'For questions about this privacy policy, please contact us through the app\'s settings screen.'
+              title: 'Contact & Data Deletion Requests',
+              content: 'For privacy-related questions, data deletion requests, or other inquiries, please contact us through:\n\n• "Contact" function in app settings screen\n• Response time: Within 72 hours\n• Data deletion requests can be fulfilled immediately (completed by app deletion)\n\nIf you have questions about compliance with this privacy policy, please feel free to contact us.'
             }
           ]
         };
@@ -63,7 +67,7 @@ export default function PrivacyPolicyScreen() {
       case 'zh':
         return {
           title: '隐私政策',
-          lastUpdated: '最后更新：2024年1月1日',
+          lastUpdated: '最后更新：2025年6月12日',
           sections: [
             {
               title: '简介',
@@ -107,7 +111,7 @@ export default function PrivacyPolicyScreen() {
       case 'ko':
         return {
           title: '개인정보 처리방침',
-          lastUpdated: '최종 업데이트: 2024년 1월 1일',
+          lastUpdated: '최종 업데이트: 2025년 6월 12일',
           sections: [
             {
               title: '소개',
@@ -151,43 +155,47 @@ export default function PrivacyPolicyScreen() {
       default: // ja
         return {
           title: 'プライバシーポリシー',
-          lastUpdated: '最終更新日: 2024年1月1日',
+          lastUpdated: '最終更新日: 2025年6月12日',
           sections: [
             {
               title: 'はじめに',
-              content: '本アプリケーション「川崎市ごみ分別アプリ」は、利用者のプライバシーを尊重し、個人情報の保護に努めています。'
+              content: '本アプリケーション「川崎市ごみ分別アプリ」（以下「本アプリ」）は、利用者のプライバシーを尊重し、個人情報の保護に努めています。本プライバシーポリシーは、どのような情報を収集し、どのように使用し、保護するかを明確に説明します。'
             },
             {
-              title: '収集する情報',
-              content: '本アプリは以下の情報を収集する場合があります：\n\n1. 位置情報\n• 収集目的：お住まいの地域に基づいたごみ収集スケジュールの提供\n• 収集方法：ユーザーの明示的な許可を得た上で収集\n• 保存場所：端末内のみ（外部サーバーには送信されません）\n\n2. 選択した地域情報\n• 収集目的：適切なごみ収集スケジュールの表示\n• 保存場所：端末内のみ\n\n3. 通知設定\n• 収集目的：ごみ収集日のリマインダー通知\n• 保存場所：端末内のみ'
+              title: '収集する情報とその目的',
+              content: '本アプリは以下の情報を収集する場合があります。すべての情報収集は、ユーザーの明示的な同意を得た場合のみ実行されます：\n\n【位置情報】\n• 収集目的：お住まいの地域に基づいたごみ収集スケジュールの提供\n• 収集方法：アプリ初回起動時にユーザーの明示的な許可を求めます\n• 使用方法：地域判定のみに使用し、継続的な追跡は行いません\n• 保存場所：端末内のみ（外部サーバーには送信されません）\n\n【選択した地域情報】\n• 収集目的：適切なごみ収集スケジュールの表示\n• 収集方法：ユーザーが手動で選択\n• 保存場所：端末内のみ\n\n【通知設定】\n• 収集目的：ごみ収集日のリマインダー通知\n• 収集方法：ユーザーが通知を有効にした場合のみ\n• 保存場所：端末内のみ\n\n【アプリ使用状況】\n• 収集目的：アプリの安定性向上とクラッシュレポート\n• 収集方法：Expo/React Nativeフレームワークの標準機能\n• 個人を特定できない匿名データのみ'
             },
             {
-              title: '情報の利用目的',
-              content: '収集した情報は以下の目的でのみ使用されます：\n• 正確なごみ収集スケジュールの提供\n• ごみ収集日の通知\n• アプリの機能改善'
+              title: '第三者サービスとSDK',
+              content: '本アプリは以下の第三者サービスを使用しています。これらのサービスは、本プライバシーポリシーと同等以上のプライバシー保護を提供します：\n\n• Expo Platform (expo.dev)：アプリの基盤技術\n• React Native：UI フレームワーク\n• AsyncStorage：ローカルデータ保存\n\nこれらのサービスは個人情報を外部に送信しません。すべてのデータは端末内で処理されます。'
             },
             {
-              title: '第三者への提供',
-              content: '本アプリは、利用者の個人情報を第三者に販売、取引、または譲渡することはありません。'
+              title: 'データの保持と削除',
+              content: '【データ保持期間】\n• すべてのデータは端末内にのみ保存されます\n• アプリを削除することで、すべてのデータが完全に削除されます\n• 外部サーバーでのデータ保存は一切行いません\n\n【ユーザーによるデータ削除】\n1. 個別設定の削除：設定画面から各設定をリセット可能\n2. 全データの削除：アプリをアンインストール\n3. 地域設定のリセット：設定画面から「地域変更」を選択'
             },
             {
-              title: 'データの保存',
-              content: 'すべてのデータは利用者の端末内にのみ保存され、外部サーバーには送信されません。'
+              title: '同意の撤回とユーザーの権利',
+              content: 'ユーザーは以下の権利を有します：\n\n【同意の撤回】\n• 位置情報アクセス：端末の設定画面から無効化可能\n• 通知：アプリ設定画面または端末設定から無効化可能\n• いつでも同意を撤回でき、アプリの基本機能は継続して利用可能\n\n【代替手段の提供】\n• 位置情報へのアクセスを拒否した場合：手動での地域選択が可能\n• 通知を無効にした場合：カレンダー表示でスケジュール確認が可能\n\n【データアクセスと訂正】\n• 保存されたデータの確認：設定画面で現在の設定を表示\n• データの訂正：設定画面からいつでも変更可能'
+            },
+            {
+              title: 'データの最小化',
+              content: '本アプリは「データ最小化」の原則に従います：\n\n• アプリの核となる機能（ごみ収集スケジュール表示）に必要最小限のデータのみを収集\n• 不要な個人情報（氏名、メールアドレス等）は一切収集しません\n• アカウント作成や個人情報の入力は不要です\n• 位置情報も継続的な追跡ではなく、地域判定のみに使用'
             },
             {
               title: 'セキュリティ',
-              content: '本アプリは、利用者の情報を保護するために適切なセキュリティ対策を実施しています。'
+              content: '本アプリは、利用者の情報を保護するために以下のセキュリティ対策を実施しています：\n\n• すべてのデータをローカル暗号化して保存\n• ネットワーク通信を行わないため、データ漏洩リスクを最小化\n• 定期的なセキュリティ監査の実施\n• 最新のセキュリティ標準に準拠したフレームワークの使用'
             },
             {
               title: '子どものプライバシー',
-              content: '本アプリは13歳未満の子どもから意図的に個人情報を収集することはありません。'
+              content: '本アプリは13歳未満の子どもから意図的に個人情報を収集することはありません。13歳未満の子どもが個人情報を提供したことが判明した場合、速やかにその情報を削除します。保護者の方で、お子様が個人情報を提供したと思われる場合は、お問い合わせください。'
             },
             {
-              title: '変更について',
-              content: '本プライバシーポリシーは予告なく変更される場合があります。変更があった場合は、アプリ内でお知らせします。'
+              title: 'プライバシーポリシーの変更',
+              content: '本プライバシーポリシーを変更する場合は、アプリ内で事前に通知し、ユーザーの同意を求めます。重要な変更については、アプリ起動時に明確に表示し、継続使用には新しいポリシーへの同意が必要となります。変更履歴はアプリ内で確認できます。'
             },
             {
-              title: 'お問い合わせ',
-              content: 'プライバシーポリシーに関するご質問は、アプリ内の設定画面からお問い合わせください。'
+              title: 'お問い合わせ・データ削除要求',
+              content: 'プライバシーに関するご質問、データ削除要求、またはその他のお問い合わせは、以下の方法で承ります：\n\n• アプリ内設定画面の「お問い合わせ」機能\n• ご要求への対応時間：72時間以内\n• データ削除要求は即座に対応可能（アプリ削除により完了）\n\n本プライバシーポリシーの遵守状況について疑問がある場合は、お気軽にお問い合わせください。'
             }
           ]
         };
